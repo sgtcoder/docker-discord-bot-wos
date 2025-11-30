@@ -13,7 +13,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && rm -rf /var/lib/apt/lists/*
 
 # Clone the bot repository to /app and remove .git folder to reduce image size
-RUN git clone https://github.com/Reloisback/Whiteout-Survival-Discord-Bot.git /app && \
+RUN git clone https://github.com/sgtcoder/Whiteout-Survival-Discord-Bot /app && \
     rm -rf /app/.git
 
 # Create bot user and group with specified UID/GID (use existing /app as home)
@@ -29,22 +29,23 @@ RUN chown -R bot:bot /app
 # Upgrade pip and install setuptools (provides pkg_resources)
 RUN pip install --no-cache-dir --upgrade pip setuptools
 
-# Install bot dependencies
-RUN pip install --no-cache-dir \
-    discord.py \
-    colorama \
-    requests \
-    aiohttp \
-    python-dotenv \
-    aiohttp-socks \
-    pytz \
-    pyzipper
-
 ## Cleanup ##
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/share/doc/*
 
 # Switch to bot user
 USER bot
+
+# Install bot dependencies
+RUN pip install --no-cache-dir \
+    aiohttp \
+    aiohttp-socks \
+    colorama \
+    ddddocr \
+    discord.py \
+    python-dotenv \
+    pytz \
+    pyzipper \
+    requests
 
 # Default command to start the bot
 CMD ["python3", "main.py"]
